@@ -1,18 +1,31 @@
-import 'tailwindcss/tailwind.css'
-import { APP_NAME } from '@/lib/consts'
+import type { AppProps } from 'next/app'
+
 import '@rainbow-me/rainbowkit/styles.css'
-import { chain, createClient, WagmiConfig } from 'wagmi'
-import { apiProvider, configureChains, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import '../styles/global.css'
+
+import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
+import { APP_NAME } from '@/lib/consts'
 
 const { chains, provider } = configureChains(
-	[chain.optimism],
-	[apiProvider.infura(process.env.NEXT_PUBLIC_INFURA_ID), apiProvider.fallback()]
+	[chain.rinkeby],
+	[alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }), publicProvider()]
 )
 
-const { connectors } = getDefaultWallets({ appName: APP_NAME, chains })
-const wagmiClient = createClient({ autoConnect: true, connectors, provider })
+const { connectors } = getDefaultWallets({
+	appName: APP_NAME,
+	chains,
+})
 
-const App = ({ Component, pageProps }) => {
+const wagmiClient = createClient({
+	autoConnect: true,
+	connectors,
+	provider,
+})
+
+function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<WagmiConfig client={wagmiClient}>
 			<RainbowKitProvider chains={chains}>
@@ -20,6 +33,7 @@ const App = ({ Component, pageProps }) => {
 			</RainbowKitProvider>
 		</WagmiConfig>
 	)
+	return
 }
 
-export default App
+export default MyApp
