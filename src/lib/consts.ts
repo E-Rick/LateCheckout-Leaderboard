@@ -1,1 +1,1 @@
-export const APP_NAME = 'dApp Starter'
+export const APP_NAME = '🏦 $LC Token 🏦'
