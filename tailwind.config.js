@@ -1,8 +1,16 @@
 /** @type {import('tailwindcss/tailwind-config').TailwindConfig} */
 module.exports = {
-	content: ['./src/**/*.{js,ts,jsx,tsx}'],
+	content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
 	theme: {
-		extend: {},
+		container: {
+			center: true,
+		},
+		extend: {
+			fontFamily: {
+				iPixelU: 'I Pixel U',
+				spaceMono: 'Space Mono',
+			},
+		},
 	},
 	plugins: [],
 }
