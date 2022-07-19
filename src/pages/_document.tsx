@@ -1,9 +1,9 @@
-import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
 
 class MyDocument extends Document {
 	static async getInitialProps(ctx: DocumentContext) {
-		const initialProps = await Document.getInitialProps(ctx);
-		return { ...initialProps };
+		const initialProps = await Document.getInitialProps(ctx)
+		return { ...initialProps }
 	}
 
 	render() {
@@ -11,34 +11,28 @@ class MyDocument extends Document {
 			<Html>
 				<Head>
 					<link
-						rel='preload'
-						href='/fonts/SpaceMono-Bold.ttf'
-						as='font'
-						type='font/ttf'
-						crossOrigin='anonymous'
+						rel="preload"
+						href="/fonts/SpaceMono-Bold.ttf"
+						as="font"
+						type="font/ttf"
+						crossOrigin="anonymous"
 					/>
+					<link rel="preload" href="/fonts/I-pixel-u.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
 					<link
-						rel='preload'
-						href='/fonts/I-pixel-u.ttf'
-						as='font'
-						type='font/ttf'
-						crossOrigin='anonymous'
-					/>
-					<link
-						rel='preload'
-						href='/fonts/SpaceMono-Regular.ttf'
-						as='font'
-						type='font/ttf'
-						crossOrigin='anonymous'
+						rel="preload"
+						href="/fonts/SpaceMono-Regular.ttf"
+						as="font"
+						type="font/ttf"
+						crossOrigin="anonymous"
 					/>
 				</Head>
-				<body className='font-spaceMono'>
+				<body className="font-spaceMono">
 					<Main />
 					<NextScript />
 				</body>
 			</Html>
-		);
+		)
 	}
 }
 
-export default MyDocument;
+export default MyDocument
