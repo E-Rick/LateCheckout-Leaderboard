@@ -21,11 +21,9 @@ const CustomConnect = () => {
 							if (!mounted || !account || !chain) {
 								return (
 									<TransitionPane>
-										<div className="actions flex align-center justify-center">
-											<button className="clip btn p-4" type="button" onClick={openConnectModal}>
-												<p className="btn-text">Must hold 50 $LC to unlock</p>
-											</button>
-										</div>
+										<button className="clip btn btn-text" type="button" onClick={openConnectModal}>
+											Must hold 50 $LC to unlock
+										</button>
 									</TransitionPane>
 								)
 							}
