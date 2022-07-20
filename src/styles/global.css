@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	@font-face {
+		font-family: 'I Pixel U';
+		font-style: normal;
+		font-weight: normal;
+		src: url('/fonts/I-pixel-u.ttf') format('truetype');
+	}
+
+	@font-face {
+		font-family: 'Space Mono';
+		font-style: normal;
+		font-weight: normal;
+		src: url('/fonts/SpaceMono-Regular.ttf') format('truetype');
+	}
+
+	@font-face {
+		font-family: 'Space Mono';
+		font-style: normal;
+		font-weight: bold;
+		src: url('/fonts/SpaceMono-Bold.ttf') format('truetype');
+	}
+}
+body {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	background-color: transparent;
+	background-image: url('/galaxy.svg');
+	background-size: cover;
+	padding: 0;
+	margin: 0;
+	margin-right: 0 !important;
+	height: 100%;
+	-webkit-font-smoothing: antialiased;
+	transition: background-color 500ms cubic-bezier(0.23, 1, 0.32, 1);
+	overflow-x: hidden;
+}
+
+:root {
+	--blackT5: rgba(0, 0, 0, 0.05);
+	--shadows-0: 0px 10px 20px var(--blackT5);
+	--shadows-stroke: inset 0 0 0 3px var(--black100);
+	--radii-2: 8px;
+	--transitions-ease: cubic-bezier(0.23, 1, 0.32, 1);
+	--transitons-1: 300ms;
+	--transitions-2: 500ms;
+	--transitions-3: 1000ms;
+	--black100: #000000;
+	--colors-overlay: rgba(0, 0, 0, 0.54);
+	--purple: #322850;
+	--pink: #f617bd;
+	--green: #03efcb;
+}
+
+.btn-text {
+	font-family: 'Space Mono';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 22px;
+
+	line-height: 149%;
+	/* identical to box height, or 33px */
+
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+
+	color: var(--purple);
+
+	text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.15);
+}
+
+.Winning {
+	text-align: center;
+}
+
+.Winning-text {
+	color: var(--purple);
+	display: inline-block;
+	font-size: 22px;
+	font-family: 'Space Mono', serif;
+	font-weight: 700;
+	position: relative;
+}
+
+.Winning-text:after {
+	color: white;
+	content: attr(data-text);
+	position: absolute;
+	-webkit-text-stroke: 0.1em #ffffff;
+	left: 0;
+	z-index: -2;
+	font-size: 1em;
+}
+
+.clip {
+	clip-path: polygon(
+		0px 20px,
+		4px 20px,
+		4px 12px,
+		8px 12px,
+		8px 8px,
+		12px 8px,
+		12px 4px,
+		16px 4px,
+		20px 4px,
+		20px 0px,
+		calc(100% - 20px) 0px,
+		calc(100% - 20px) 4px,
+		calc(100% - 12px) 4px,
+		calc(100% - 12px) 8px,
+		calc(100% - 8px) 8px,
+		calc(100% - 8px) 12px,
+		calc(100% - 4px) 12px,
+		calc(100% - 4px) 16px,
+		calc(100% - 4px) 20px,
+		100% 20px,
+		100% calc(100% - 20px),
+		calc(100% - 4px) calc(100% - 20px),
+		calc(100% - 4px) calc(100% - 12px),
+		calc(100% - 8px) calc(100% - 12px),
+		calc(100% - 8px) calc(100% - 8px),
+		calc(100% - 12px) calc(100% - 8px),
+		calc(100% - 12px) calc(100% - 4px),
+		calc(100% - 16px) calc(100% - 4px),
+		calc(100% - 20px) calc(100% - 4px),
+		calc(100% - 20px) 100%,
+		20px 100%,
+		20px calc(100% - 4px),
+		12px calc(100% - 4px),
+		12px calc(100% - 8px),
+		8px calc(100% - 8px),
+		8px calc(100% - 12px),
+		4px calc(100% - 12px),
+		4px calc(100% - 16px),
+		4px calc(100% - 20px),
+		0px calc(100% - 20px)
+	);
+}
+
+.clip:active {
+	top: 2px;
+}
+
+.h1 {
+	text-shadow: 5px 3px 0 var(--pink), -5px 0 0 var(--green);
+}
+
+.btn {
+	background: var(--green);
+	border: none;
+	border-radius: 10px;
+	padding: 15px;
+	cursor: pointer;
+}
+.btn2 {
+	background: var(--white);
+	border: none;
+	border-radius: 10px;
+	padding: 15px;
+	cursor: pointer;
+}
+.btn:active {
+	transform: translateY(4px);
+}
+
+.fancy {
+	font-size: 32px;
+	text-transform: uppercase;
+	color: var(--black100);
+	text-shadow: 0px 4px 0px rgba(0, 0, 0, 0.1);
+	-webkit-text-stroke: 1.5px #ffffff;
+}
+
+.card {
+	background-image: url('/Background.svg');
+	background-repeat: no-repeat;
+	background-size: contain;
+}
