@@ -54,6 +54,7 @@ body {
 	--purple: #322850;
 	--pink: #f617bd;
 	--green: #03efcb;
+	--white: #ffffff;
 }
 
 .btn-text {
@@ -73,17 +74,9 @@ body {
 	text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.15);
 }
 
-.Winning {
-	text-align: center;
-}
-
 .Winning-text {
 	color: var(--purple);
-	display: inline-block;
-	font-size: 22px;
 	font-family: 'Space Mono', serif;
-	font-weight: 700;
-	position: relative;
 }
 
 .Winning-text:after {
@@ -166,9 +159,11 @@ body {
 .btn:active {
 	transform: translateY(4px);
 }
+.btn2:active {
+	transform: translateY(4px);
+}
 
 .fancy {
-	font-size: 32px;
 	text-transform: uppercase;
 	color: var(--black100);
 	text-shadow: 0px 4px 0px rgba(0, 0, 0, 0.1);
@@ -178,5 +173,5 @@ body {
 .card {
 	background-image: url('/Background.svg');
 	background-repeat: no-repeat;
-	background-size: contain;
+	background-size: 100% 100%;
 }
