@@ -36,7 +36,7 @@ const Home: FC = () => {
 
 	const loadBalanceData = async (address: string) => {
 		// Comment out this line to pull in the user data from the data/users.ts file
-		// let { data: users } = await supabase.from('accounts').select('*').order('name')
+		let { data: users } = await supabase.from('accounts').select('*').order('name')
 		const tokenBalances = await Promise.all(
 			tokenAddresses.map(async token => {
 				const tokenInst: ethers.Contract = new ethers.Contract(TOKEN_ADDRESS, tokenABI, provider)
