@@ -40,32 +40,16 @@ export default function Account({ account }: PropTypes) {
 			</tr>
 		)
 	}
-
 	return (
-		<>
-			<div className="flex justify-center">
-				{account.tokens.map(token => {
-					return (
-						<div className="token" key={token.token}>
-							{token.balance < 50 && (
-								<label className="fancy box-border text-3xl">
-									🥺 You need 50 $LC, ask lucas@latecheckout.studio for some.
-								</label>
-							)}
-							{token.balance >= 50 && (
-								<table role="table" className="table-fixed max-w-7xl justify-center">
-									<TableHead />
-									<tbody>
-										{token.userBalances.map((u, key) => (
-											<TableRow key={key} user={u} rank={key} />
-										))}
-									</tbody>
-								</table>
-							)}
-						</div>
-					)
-				})}
-			</div>
-		</>
+		<div className="flex justify-center align-center ">
+			<table role="table" className="table-fixed max-w-7xl justify-center">
+				<TableHead />
+				<tbody>
+					{account.tokens[0].userBalances.map((u, key) => (
+						<TableRow key={key} user={u} rank={key} />
+					))}
+				</tbody>
+			</table>
+		</div>
 	)
 }

@@ -15,6 +15,7 @@ import { supabase } from '@/utils/supabaseClient'
 import { useIsMounted } from '@/hooks/useIsMounted'
 import { TOKEN, TOKEN_ADDRESS } from '@/lib/consts'
 import { users } from '@/data/users'
+import TokenGate from '@/components/TokenGate'
 
 const tokenAddresses = [
 	{
@@ -89,26 +90,15 @@ const Home: FC = () => {
 				<CustomConnect />
 			</div>
 
-			{address && Number(balance?.formatted) > 50 && !isLoadingLeaderboard && (
-				<div className="buttons flex gap-x-5 align-center justify-center mb-8">
-					<NextLink href={'/add'} className="clip btn btn-text">
-						Add peers
-					</NextLink>
-					<NextLink href={'/send'} className="clip btn2 btn-text">
-						Send funds
-					</NextLink>
-				</div>
-			)}
+			<TokenGate>
+				{isLoadingLeaderboard && !mounted && (
+					<div className="flex align-center justify-center">
+						<ClipLoader color="white" loading={isLoadingLeaderboard} size={40} />
+					</div>
+				)}
 
-			{isLoadingLeaderboard && !mounted && (
-				<div className="flex align-center justify-center">
-					<ClipLoader color="white" loading={isLoadingLeaderboard} size={40} />
-				</div>
-			)}
-
-			<div className="flex justify-center align-center pt-2">
-				{address && !isLoadingLeaderboard && (
-					<Card>
+				{address && !isLoadingLeaderboard && accounts.length > 0 && (
+					<div>
 						{accounts.map(account => {
 							return (
 								<div className="account" key={account.address}>
@@ -116,9 +106,9 @@ const Home: FC = () => {
 								</div>
 							)
 						})}
-					</Card>
+					</div>
 				)}
-			</div>
+			</TokenGate>
 		</div>
 	)
 }
