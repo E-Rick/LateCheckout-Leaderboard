@@ -4,6 +4,8 @@ import { useAccount, useContract, useSigner } from 'wagmi'
 import tokenABI from '@/lib/tokenABI'
 import { formatUnits, parseUnits } from 'ethers/lib/utils'
 import { supabase } from '@/utils/supabaseClient'
+import ConfettiCanvas from '@/components/animations/ConfettiCanvas'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 const Send: FC = () => {
 	const { data: signer, isError, isLoading } = useSigner()
@@ -11,6 +13,7 @@ const Send: FC = () => {
 	const [accounts, setAccounts] = useState([])
 	const [recipient, setRecipient] = useState('')
 	const [tokenAmnt, setTokenAmnt] = useState('')
+	const [fireConfetti, setFireConfetti] = useState(false)
 	const erc20_rw = useContract({
 		addressOrName: '0xd5003296ac2c09d8fabb412ba1a2cdf50d959496',
 		contractInterface: tokenABI,
@@ -50,6 +53,8 @@ const Send: FC = () => {
 			console.log('recipients balance: ', formatUnits(await erc20_rw.balanceOf(recipient)))
 
 			setIsSendingFunds(false)
+			// fire fetti!
+			setFireConfetti(true)
 		} catch (error) {
 			alert(`${error}`)
 			setIsSendingFunds(false)
@@ -104,8 +109,9 @@ const Send: FC = () => {
 						disabled={isSendingFunds}
 						value="submit"
 					>
-						{isSendingFunds ? 'Sending ...' : 'Send $LC'}
+						{isSendingFunds ? <ClipLoader color="white" loading={isSendingFunds} size={20} /> : 'Send $LC'}
 					</button>
+					<ConfettiCanvas fireConfetti={fireConfetti} />
 				</form>
 			</Card>
 		</div>

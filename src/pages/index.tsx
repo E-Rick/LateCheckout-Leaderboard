@@ -12,34 +12,34 @@ import CustomConnect from '@/components/CustomConnect'
 import { Card } from '@/components/Card'
 import { NextLink } from '@/components/NextLink'
 import { supabase } from '@/utils/supabaseClient'
+import { useIsMounted } from '@/hooks/useIsMounted'
+import { TOKEN, TOKEN_ADDRESS } from '@/lib/consts'
 import { users } from '@/data/users'
 
 const tokenAddresses = [
 	{
-		address: '0xd5003296ac2c09d8fabb412ba1a2cdf50d959496',
-		token: 'LC',
+		address: TOKEN_ADDRESS,
+		token: TOKEN,
 	},
 ]
 
 const Home: FC = () => {
 	const [accounts, setAccounts] = useState<AccountType[]>([])
 	const [isLoadingLeaderboard, setLoadingLeaderBoard] = useState(false)
-	const { address } = useAccount()
+	const mounted = useIsMounted()
 	const provider = useProvider()
+	const { address } = useAccount()
 	const { data: balance } = useBalance({
 		addressOrName: address,
-		token: '0xd5003296ac2c09d8fabb412ba1a2cdf50d959496',
+		token: TOKEN_ADDRESS,
 	})
 
 	const loadBalanceData = async (address: string) => {
-		let { data: users } = await supabase.from('accounts').select('*').order('name')
+		// Comment out this line to pull in the user data from the data/users.ts file
+		// let { data: users } = await supabase.from('accounts').select('*').order('name')
 		const tokenBalances = await Promise.all(
 			tokenAddresses.map(async token => {
-				const tokenInst: ethers.Contract = new ethers.Contract(
-					'0xd5003296ac2c09d8fabb412ba1a2cdf50d959496',
-					tokenABI,
-					provider
-				)
+				const tokenInst: ethers.Contract = new ethers.Contract(TOKEN_ADDRESS, tokenABI, provider)
 				const balance = await tokenInst.balanceOf(address)
 
 				const promises: any[] = []
@@ -49,7 +49,6 @@ const Home: FC = () => {
 				users.forEach(u => {
 					const promise = tokenInst.balanceOf(u.address)
 					promises.push(promise)
-					console.log('🚀 ~ file: index.tsx ~ line 54 ~ u', u)
 				})
 
 				const balances = await Promise.all(promises)
@@ -80,11 +79,9 @@ const Home: FC = () => {
 		])
 	}
 
-	const hasAccess = () => Number(balance?.formatted) > 50 ?? false
-
 	useEffect(() => {
-		if (hasAccess) loadBalanceData(address)
-	}, [])
+		loadBalanceData(address)
+	}, [address])
 
 	return (
 		<div className="mx-auto">
@@ -92,7 +89,7 @@ const Home: FC = () => {
 				<CustomConnect />
 			</div>
 
-			{address && !hasAccess && !isLoadingLeaderboard && (
+			{address && Number(balance?.formatted) > 50 && !isLoadingLeaderboard && (
 				<div className="buttons flex gap-x-5 align-center justify-center mb-8">
 					<NextLink href={'/add'} className="clip btn btn-text">
 						Add peers
@@ -102,13 +99,15 @@ const Home: FC = () => {
 					</NextLink>
 				</div>
 			)}
-			{isLoadingLeaderboard && (
+
+			{isLoadingLeaderboard && !mounted && (
 				<div className="flex align-center justify-center">
 					<ClipLoader color="white" loading={isLoadingLeaderboard} size={40} />
 				</div>
 			)}
+
 			<div className="flex justify-center align-center pt-2">
-				{address && hasAccess && !isLoadingLeaderboard && (
+				{address && !isLoadingLeaderboard && (
 					<Card>
 						{accounts.map(account => {
 							return (
