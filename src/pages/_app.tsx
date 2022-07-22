@@ -7,8 +7,11 @@ import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
-import { APP_NAME } from '@/lib/consts'
+import { APP_NAME, FATHOM_ID } from '@/lib/consts'
 import Layout from '@/components/Layout'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import * as Fathom from 'fathom-client'
 
 const { chains, provider } = configureChains(
 	[chain.rinkeby],
@@ -27,6 +30,25 @@ const wagmiClient = createClient({
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
+	const router = useRouter()
+
+	useEffect(() => {
+		Fathom.load(FATHOM_ID, {
+			includedDomains: ['lc-leaderboard.vercel.app, www.lc-leaderboard.vercel.app'],
+		})
+
+		function onRouteChangeComplete() {
+			Fathom.trackPageview()
+		}
+		// Record a pageview when route changes
+		router.events.on('routeChangeComplete', onRouteChangeComplete)
+
+		// Unassign event listener
+		return () => {
+			router.events.off('routeChangeComplete', onRouteChangeComplete)
+		}
+	}, [])
+
 	return (
 		<WagmiConfig client={wagmiClient}>
 			<RainbowKitProvider chains={chains}>
