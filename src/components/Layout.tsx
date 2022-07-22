@@ -18,14 +18,14 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => (
 			<link rel="shortcut icon" href="/images/favicon.ico" />
 		</Head>
 
-		<header className="flex justify-end p-8">
+		<header className="flex justify-end p-4">
 			<ConnectWallet show={'connected'} />
 		</header>
 
-		<section className="pt-4 px-4 min-h-screen">
+		<section className="pt-4 px-2">
 			<div className="flex justify-center">
 				<NextLink href="/">
-					<h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-10 h1 font-iPixelU uppercase text-[#ebf9fe]">
+					<h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl mb-10 h1 font-iPixelU uppercase text-[#ebf9fe]">
 						Leaderboard
 					</h1>
 				</NextLink>
