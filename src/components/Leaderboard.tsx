@@ -23,16 +23,16 @@ export default function Account({ account }: PropTypes) {
 	const TableRow = ({ user, rank }) => {
 		return (
 			<tr>
-				<td className="pl-2 box-border pt-2">
+				<td className="pl-1 sm:pl-2 box-border pt-2 w-6">
 					{rank === 0 && <img src="/1stplace.svg" />}
 					{rank === 1 && <img src="/2ndplace.svg" />}
 					{rank === 2 && <img src="/3rdplace.svg" />}
 				</td>
 				<td className="text-center text-bold text-lg">{rank}</td>
-				<td>{user.name}</td>
-				<td className="hidden pl-4 sm:table-cell">{formatAddress(user.address)}</td>
-				<td className="Winning flex justify-start align-center box-border px-4 pt-2">
-					<img src="/logo.svg" className="pr-2 w-10 sm:w-auto" />
+				<td className="text-md">{user.name}</td>
+				<td className="hidden pl-4 sm:pl-2 sm:table-cell">{formatAddress(user.address)}</td>
+				<td className="Winning flex justify-start align-center box-border pt-2">
+					<img src="/logo.svg" className="pr-1 w-8 sm:w-auto" />
 					<div data-text={user.balance.toString()} className="Winning-text text-2xl font-bold relative">
 						{user.balance}
 					</div>
