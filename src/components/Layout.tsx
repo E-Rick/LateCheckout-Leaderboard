@@ -22,7 +22,7 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => (
 			<ConnectWallet show={'connected'} />
 		</header>
 
-		<section className="pt-8 px-4 min-h-screen">
+		<section className="pt-4 px-4 min-h-screen">
 			<div className="flex justify-center">
 				<NextLink href="/">
 					<h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-10 h1 font-iPixelU uppercase text-[#ebf9fe]">

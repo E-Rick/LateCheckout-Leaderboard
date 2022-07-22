@@ -28,10 +28,10 @@ export default function Account({ account }: PropTypes) {
 					{rank === 1 && <img src="/2ndplace.svg" />}
 					{rank === 2 && <img src="/3rdplace.svg" />}
 				</td>
-				<td className="text-center">{rank}</td>
+				<td className="text-center text-bold text-lg">{rank}</td>
 				<td>{user.name}</td>
-				<td className="hidden sm:table-cell">{formatAddress(user.address)}</td>
-				<td className="Winning flex justify-start align-center box-border pr-4 pt-2">
+				<td className="hidden pl-4 sm:table-cell">{formatAddress(user.address)}</td>
+				<td className="Winning flex justify-start align-center box-border px-4 pt-2">
 					<img src="/logo.svg" className="pr-2 w-10 sm:w-auto" />
 					<div data-text={user.balance.toString()} className="Winning-text text-2xl font-bold relative">
 						{user.balance}
@@ -43,12 +43,14 @@ export default function Account({ account }: PropTypes) {
 
 	return (
 		<>
-			<div className="pl-4">
+			<div className="flex justify-center">
 				{account.tokens.map(token => {
 					return (
 						<div className="token" key={token.token}>
 							{token.balance < 50 && (
-								<label>🥺 You need 50 $LC, ask lucas@latecheckout.studio for some.</label>
+								<label className="fancy box-border text-3xl">
+									🥺 You need 50 $LC, ask lucas@latecheckout.studio for some.
+								</label>
 							)}
 							{token.balance >= 50 && (
 								<table role="table" className="table-fixed max-w-7xl justify-center">

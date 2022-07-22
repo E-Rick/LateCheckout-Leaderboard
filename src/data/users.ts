@@ -93,6 +93,6 @@ export const users = [
 	},
 	{
 		name: 'Erick Martinez Jr.',
-		address: '0x392e999325468bf113fdcB378581f6bdFE4C53F2',
+		address: '0xf153337f18951B65642Cc88CcdF7f957CF993F9e',
 	},
 ]
