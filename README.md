@@ -1,5 +1,8 @@
 # Late Checkout Leaderboard
 
+![App Preview](/public/lc-leaderboard.png)
+![Confetti Preview](/public/lc-confetti.png)
+
 ## Getting Started
 
 First, install dependencies with `yarn install`. Then, initialize the env file with `cp .env.example .env`, and add your Supabase project env vars. Finally, run the development server with `yarn dev`.
