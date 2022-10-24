@@ -9,35 +9,46 @@
 		font-weight: normal;
 		src: url('/fonts/I-pixel-u.ttf') format('truetype');
 	}
+}
 
-	@font-face {
-		font-family: 'Space Mono';
-		font-style: normal;
-		font-weight: normal;
-		src: url('/fonts/SpaceMono-Regular.ttf') format('truetype');
-	}
 
-	@font-face {
-		font-family: 'Space Mono';
-		font-style: normal;
-		font-weight: bold;
-		src: url('/fonts/SpaceMono-Bold.ttf') format('truetype');
-	}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
 }
 body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+input, button, textarea, select {
+  font: inherit;
+}
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+#root, #__next {
+  isolation: isolate;
+}
+
+
+body {
+	font-family: 'SpaceMono', sans-serif;
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
 	background-color: transparent;
 	background-image: url('/galaxy.svg');
 	background-size: cover;
-	padding: 0;
-	margin: 0;
 	margin-right: 0 !important;
-	height: 100%;
-	-webkit-font-smoothing: antialiased;
-	transition: background-color 500ms cubic-bezier(0.23, 1, 0.32, 1);
-	overflow-x: hidden;
 }
 
 :root {
@@ -58,6 +69,9 @@ body {
 }
 
 .btn-text {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	font-family: 'Space Mono';
 	font-style: normal;
 	font-weight: 700;
@@ -72,6 +86,12 @@ body {
 	color: var(--purple);
 
 	text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+	.btn-text {
+		font-size: 16px;
+	}
 }
 
 .Winning-text {

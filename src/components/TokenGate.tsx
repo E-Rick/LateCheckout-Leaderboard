@@ -1,28 +1,30 @@
-import { TOKEN_ADDRESS } from '@/lib/consts'
+import { useTokenGate } from '@/hooks/useTokenGate'
 import { ReactNode } from 'react'
-import { useAccount, useBalance } from 'wagmi'
 import { Card } from './Card'
-type Props = {
+
+type TokenGateProps = {
 	children?: ReactNode
 }
-const TokenGate = ({ children }: Props) => {
-	const { address } = useAccount()
-	const { data: balance } = useBalance({
-		addressOrName: address,
-		token: TOKEN_ADDRESS,
-	})
+const TokenGate = ({ children }: TokenGateProps) => {
+	const { hasEnoughToken } = useTokenGate()
+
 	return (
 		<div className="flex justify-center align-center ">
 			<Card>
-				{Number(balance?.formatted) < 50 && (
-					<label className="Winning-text box-border p-10 text-3xl text-bold">
-						🥺
-						<div>You need 50 $LC. Ask </div>
-						<div>lucas@latecheckout.studio for some.</div>
-					</label>
+				{hasEnoughToken ? (
+					<>{children}</>
+				) : (
+					<section className="flex flex-col justify-center p-10 text-3xl Winning-text text-bold">
+						<div>🥺 You need 50 $LC</div>
+						<div>
+							Ask{' '}
+							<a href="mailto:lucas@latecheckout.studio" className="hover:underline-offset-0 hover:">
+								lucas@latecheckout.studio
+							</a>{' '}
+							for some.
+						</div>
+					</section>
 				)}
-
-				{Number(balance?.formatted) > 50 && <>{children}</>}
 			</Card>
 		</div>
 	)
