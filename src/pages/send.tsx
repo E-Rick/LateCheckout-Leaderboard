@@ -2,33 +2,37 @@ import React, { FC, useEffect, useState } from 'react'
 import { useContract, useSigner } from 'wagmi'
 import tokenABI from '@/lib/tokenABI'
 import { formatUnits, parseUnits } from 'ethers/lib/utils'
-import { supabase } from '@/utils/supabaseClient'
+import { supabase } from '@/lib/supabaseClient'
 import ConfettiCanvas from '@/components/animations/ConfettiCanvas'
 import ClipLoader from 'react-spinners/ClipLoader'
+import { Card } from '@/components/Card'
+import { TOKEN_ADDRESS } from '@/lib/consts'
+import { useAuth } from '@/hooks/useAuth'
+import { shortenAddress } from '@/utils/formatters'
 import TokenGate from '@/components/TokenGate'
 
 const Send: FC = () => {
-	const { data: signer } = useSigner()
+	const { signer } = useAuth()
 	const [isSendingFunds, setIsSendingFunds] = useState(false)
 	const [accounts, setAccounts] = useState([])
 	const [recipient, setRecipient] = useState('')
-	const [tokenAmnt, setTokenAmnt] = useState('')
+	const [tokenAmount, setTokenAmount] = useState('')
 	const [fireConfetti, setFireConfetti] = useState(false)
+
 	const erc20_rw = useContract({
-		addressOrName: '0xd5003296ac2c09d8fabb412ba1a2cdf50d959496',
+		addressOrName: TOKEN_ADDRESS,
 		contractInterface: tokenABI,
 		signerOrProvider: signer,
 	})
 
 	useEffect(() => {
+		const fetchAccounts = async () => {
+			let { data: accounts, error } = await supabase.from('accounts').select('*').order('name')
+			if (error) console.error('error', error)
+			else setAccounts(accounts)
+		}
 		fetchAccounts()
 	}, [])
-
-	const fetchAccounts = async () => {
-		let { data: accounts, error } = await supabase.from('accounts').select('*').order('name')
-		if (error) console.log('error', error)
-		else setAccounts(accounts)
-	}
 
 	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		try {
@@ -36,12 +40,12 @@ const Send: FC = () => {
 			event.preventDefault()
 
 			// The signer has enough tokens to send, so true is returned
-			console.log(await erc20_rw.callStatic.transfer(recipient, parseUnits(tokenAmnt)))
+			console.log(await erc20_rw.callStatic.transfer(recipient, parseUnits(tokenAmount)))
 
 			console.log('balance: ', formatUnits(await erc20_rw.balanceOf(signer.getAddress())))
 
 			// Transfer 1.23 tokens to the ENS name "ricmoo.eth"
-			const tx = await erc20_rw.transfer(recipient, parseUnits(tokenAmnt))
+			const tx = await erc20_rw.transfer(recipient, parseUnits(tokenAmount))
 
 			// Wait for the transaction to be mined...
 			await tx.wait()
@@ -64,13 +68,13 @@ const Send: FC = () => {
 	const handleChange = (event: { target: { value: string } }) => {
 		const result = event.target.value.replace(/\D/g, '')
 
-		setTokenAmnt(result)
+		setTokenAmount(result)
 	}
 
 	return (
 		<TokenGate>
-			<form onSubmit={handleSubmit} className="flex flex-col w-full px-4 gap-10">
-				<h2 className="fancy font-bold text-4xl place-content-center flex sm:pt-2 py-4">Send Funds</h2>
+			<form onSubmit={handleSubmit} className="flex flex-col w-full gap-10 px-4">
+				<h2 className="flex py-4 text-4xl font-bold fancy place-content-center sm:pt-2">Send Funds</h2>
 
 				<div>
 					<label className="block mb-2 text-sm font-medium text-slate-700">Recipient</label>
@@ -79,37 +83,36 @@ const Send: FC = () => {
 						name="recipients"
 						value={recipient}
 						onChange={event => {
-							console.log(event.target.value)
 							setRecipient(event.target.value)
 						}}
 					>
 						{accounts.map((account, index) => (
 							<option key={index} value={account.address}>
-								{account.name}
+								<div className="flex justify-center">
+									<span>{account.name}</span>
+									<span>{shortenAddress(account.address)}</span>
+								</div>
 							</option>
 						))}
 					</select>
 				</div>
+
 				<div>
 					<label className="block mb-2 text-sm font-medium text-slate-700">Amount to send</label>
 					<input
-						value={tokenAmnt}
+						value={tokenAmount}
 						onChange={handleChange}
 						type="number"
-						id="tokenAmnt"
+						id="tokenAmount"
 						className="bg-red-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-red-100 dark:border-green-400"
 						placeholder="$LC"
 					/>
 				</div>
 
-				<button
-					className="clip btn btn-text align-center justify-center"
-					type="submit"
-					disabled={isSendingFunds}
-					value="submit"
-				>
-					{isSendingFunds ? <ClipLoader color="white" loading={isSendingFunds} size={20} /> : 'Send $LC'}
+				<button className="clip btn btn-text" type="submit" disabled={isSendingFunds} value="submit">
+					{isSendingFunds ? <ClipLoader color="white" loading={isSendingFunds} size={20} /> : 'Send Funds'}
 				</button>
+
 				<ConfettiCanvas fireConfetti={fireConfetti} />
 			</form>
 		</TokenGate>

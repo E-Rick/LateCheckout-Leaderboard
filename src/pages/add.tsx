@@ -1,20 +1,22 @@
 import { Card } from '@/components/Card'
-import React, { FC, useState } from 'react'
-import { supabase } from '../utils/supabaseClient'
-import { useAccount } from 'wagmi'
+import React, { useState } from 'react'
+import { supabase } from '@/lib/supabaseClient'
+import type { NextPage } from 'next'
+import { useAuth } from '@/hooks/useAuth'
 import TokenGate from '@/components/TokenGate'
 
-const Send: FC = () => {
+const Send: NextPage = () => {
 	const [loading, setLoading] = useState(false)
-	const { address } = useAccount()
+	const { address } = useAuth()
+	const [walletAddress, setWalletAddress] = useState('')
 	const [name, setName] = useState('')
 
-	async function addPeer({ name, address }) {
+	async function addPeer() {
 		try {
 			setLoading(true)
 			const updates = {
 				name,
-				address,
+				address: walletAddress,
 			}
 
 			let { error } = await supabase.from('accounts').insert(updates, {
@@ -33,8 +35,8 @@ const Send: FC = () => {
 
 	return (
 		<TokenGate>
-			<form className="flex flex-col w-full px-4 gap-10">
-				<h2 className="fancy font-bold text-4xl place-content-center flex sm:pt-2 py-4">Add Peer</h2>
+			<form className="flex flex-col w-full gap-10 px-4">
+				<h2 className="flex py-4 text-4xl font-bold fancy place-content-center sm:pt-2">Add Peer</h2>
 				<div>
 					<label htmlFor="name" className="block mb-2 text-sm font-medium text-slate-700">
 						Name
@@ -49,11 +51,25 @@ const Send: FC = () => {
 					/>
 				</div>
 
+				<div>
+					<label htmlFor="address" className="block mb-2 text-sm font-medium text-slate-700">
+						Address
+					</label>
+					<input
+						id="address"
+						type="text"
+						value={address || ''}
+						onChange={e => setWalletAddress(e.target.value)}
+						className="bg-slate-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500  block w-full p-2.5 dark:bg-green-100"
+						placeholder="Name"
+					/>
+				</div>
+
 				<button
-					className="clip btn btn-text align-center justify-center"
+					className="justify-center clip btn btn-text align-center"
 					type="submit"
 					disabled={loading}
-					onClick={() => addPeer({ name, address })}
+					onClick={() => addPeer()}
 				>
 					{loading ? 'Loading ...' : 'Add Peer'}
 				</button>
