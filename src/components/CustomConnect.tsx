@@ -1,7 +1,7 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import React from 'react'
 import TransitionPane from './animations/TransitionPane'
-import { NextLink } from './NextLink'
+import { NextLink } from './common/NextLink'
 
 const CustomConnect = () => {
 	return (
@@ -23,7 +23,7 @@ const CustomConnect = () => {
 								return (
 									<TransitionPane>
 										<button
-											className="clip btn btn-text mb-8"
+											className="mb-8 clip btn btn-text"
 											type="button"
 											onClick={openConnectModal}
 										>
@@ -34,14 +34,16 @@ const CustomConnect = () => {
 							}
 
 							return (
-								<div className="buttons flex gap-x-5 align-center justify-center mb-8">
-									<NextLink href={'/add'} className="clip btn btn-text">
-										Add peers
-									</NextLink>
-									<NextLink href={'/send'} className="clip btn2 btn-text">
-										Send funds
-									</NextLink>
-								</div>
+								<TransitionPane>
+									<div className="flex justify-center mb-8 buttons gap-x-5">
+										<NextLink href={'/add'} className="clip btn btn-text">
+											Add peers
+										</NextLink>
+										<NextLink href={'/send'} className="clip btn2 btn-text">
+											Send funds
+										</NextLink>
+									</div>
+								</TransitionPane>
 							)
 						})()}
 					</div>
