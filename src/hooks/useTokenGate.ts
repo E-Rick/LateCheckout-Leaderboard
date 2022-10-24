@@ -13,9 +13,9 @@ export const useTokenGate = () => {
   })
 
   const tokenBalanceFormatted = Number(tokenBalance?.formatted)
-  const hasToken = tokenBalance && tokenBalanceFormatted > 0
+  const hasEnoughToken = tokenBalance && tokenBalanceFormatted > 50
 
   return {
-    hasToken,
+    hasEnoughToken,
   }
 }
