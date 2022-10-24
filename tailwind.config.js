@@ -11,6 +11,7 @@ module.exports = {
 		},
 		extend: {
 			fontFamily: {
+				sans: ['Space Mono', 'sans-serif'],
 				iPixelU: 'I Pixel U',
 				spaceMono: 'Space Mono',
 			},

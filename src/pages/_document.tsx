@@ -1,3 +1,4 @@
+import Fonts from '@/components/common/Google/Fonts'
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
 
 class MyDocument extends Document {
@@ -10,21 +11,9 @@ class MyDocument extends Document {
 		return (
 			<Html>
 				<Head>
-					<link
-						rel="preload"
-						href="/fonts/SpaceMono-Bold.ttf"
-						as="font"
-						type="font/ttf"
-						crossOrigin="anonymous"
-					/>
-					<link rel="preload" href="/fonts/I-pixel-u.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-					<link
-						rel="preload"
-						href="/fonts/SpaceMono-Regular.ttf"
-						as="font"
-						type="font/ttf"
-						crossOrigin="anonymous"
-					/>
+					<meta charSet="utf-8" />
+					<link rel="shortcut icon" href="/images/favicon.ico" />
+					<Fonts />
 				</Head>
 				<body className="font-spaceMono">
 					<Main />
