@@ -3,13 +3,14 @@ import type { AppProps } from 'next/app'
 import '@rainbow-me/rainbowkit/styles.css'
 import '../styles/global.css'
 
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { getDefaultWallets, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 import { APP_NAME } from '@/lib/consts'
 import Layout from '@/components/Layout'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { AnimatePresence } from 'framer-motion'
 
 const { chains, provider } = configureChains(
 	[chain.goerli],
@@ -32,10 +33,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<WagmiConfig client={wagmiClient}>
-			<RainbowKitProvider chains={chains}>
-				<Layout title={APP_NAME}>
-					<Component {...pageProps} />
-				</Layout>
+			<RainbowKitProvider chains={chains} theme={darkTheme()}>
+				<AnimatePresence>
+					<Layout title={APP_NAME}>
+						<Component {...pageProps} />
+					</Layout>
+				</AnimatePresence>
 			</RainbowKitProvider>
 		</WagmiConfig>
 	)
